@@ -2,41 +2,27 @@
 "use strict";
 
 const Router = require("express").Router;
-const DemoService = require("../services/demo.js");
+const EstadosService = require("../services/estados");
+const VTilesService = require("../services/vTiles");
 
 module.exports = () => {
 
 	const api = new Router();
 
-	api.get("/", async (req, res) => {
+	api.get("/:z/:x/:y.pbf", async (req, res) => {
 
-		console.log("Get");
-		res.json(await DemoService.getSomething());
-
-	});
-
-	api.post("/", async (req, res) => {
-
-		console.log("Post");
-		res.json(await DemoService.postSomething());
+		const { z, x, y } = req.params;
+		res.setHeader("Content-Type", "application/x-protobuf");
+		res.send(await VTilesService.getTile(z, x, y));
 
 	});
 
-	api.put("/", async (req, res) => {
+	api.get("/estados", async (req, res) => {
 
-		console.log("Put");
-		res.json(await DemoService.putSomething());
-
-	});
-
-	api.delete("/", async (req, res) => {
-
-		console.log("Delete");
-		res.json(await DemoService.deleteSomething());
+		res.json(await EstadosService.getEstados());
 
 	});
 
 	return api;
 
 };
-
