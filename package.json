@@ -14,7 +14,7 @@
     "dev": "nodemon -w src",
     "lint": "eslint --fix --cache --ignore-path .gitignore src",
     "release": "run-s test build",
-    "start": "node dist/index.js",
+    "start": "node ./dist/index.js",
     "start-node": "run-s build start",
     "test": "run-s lint test-unit test-coverage",
     "test-unit-watch": "jest --watch",
