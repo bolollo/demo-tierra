@@ -9,6 +9,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const os = require("os");
 const apiRoutes = require("./routes/api");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger.json");
 
 require("dotenv").config();
 
@@ -56,6 +58,8 @@ if (cluster.isMaster) {
 	});
 
 	app.use("/api/", apiRoutes());
+
+	app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 	app.use((req, res) => {
 

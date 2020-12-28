@@ -1,0 +1,124 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "0.0.2",
+		"title": "Demo API",
+		"description": "API documentation",
+		"license": {
+			"name": "MIT",
+			"url": "https://opensource.org/licenses/MIT"
+		}
+	},
+	"host": "localhost",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "states",
+            "description": "states and their population"
+        },
+        {
+            "name": "vectorTiles",
+            "description": "MVT"
+        }
+    ],
+    "schemes": ["http"],
+	"consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/api/estados": {
+            "get": {
+				"tags": [
+					"states"
+				],
+				"summary": "Returns a json with a list of states and their population",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/states"
+						}
+					}
+				}
+			}
+        },
+        "/api/{z}/{x}/{y}.pbf": {
+			"parameters": [
+				{
+					"name": "z",
+					"in": "path",
+					"required": true,
+					"description": "zoom level",
+					"type": "number", 
+					"example": 5
+				},
+				{
+					"name": "x",
+					"in": "path",
+					"required": true,
+					"description": "position on the x-axis of the tile matrix",
+					"type": "number",
+					"example": 8
+				},
+				{
+					"name": "y",
+					"in": "path",
+					"required": true,
+					"description": "position on the y-axis of the tile matrix",
+					"type": "number",
+					"example": 12
+				}
+			],
+			"get": {
+				"tags": [
+					"vectorTiles"
+				],
+				"summary": "Returns the data in MVT format",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/mvt"
+						}
+					}
+				}
+            }
+        }
+    },
+    "definitions": {
+        "mvt": {
+            "type": "Google protobuf",
+            "description": "Mapbox Vector Tiles",
+            "externalDocs": {
+                "url": "https://docs.mapbox.com/vector-tiles/specification/"
+            }
+        },
+        "states": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/state"
+            }
+        },
+        "state": {
+            "type": "object",
+            "properties": {
+                "ogc_fid": {
+                    "type": "number",
+                    "description": "State id"
+                },
+                "nombre_igg": {
+                    "type": "string",
+                    "description": "State name"
+                },
+                "p_total": {
+                    "type": "number",
+                    "description": "State population"
+                }
+            },
+            "example": {
+                "ogc_fid": 22,
+                "nombre_igg": "México",
+                "p_total": 15175862
+			}
+        }
+    }
+}

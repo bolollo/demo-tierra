@@ -32,7 +32,8 @@
     "helmet": "^3.23.3",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
